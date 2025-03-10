@@ -450,7 +450,7 @@ struct wlr_backend *wlr_x11_backend_create(struct wl_event_loop *loop,
 			if (dri3_reply->major_version >= 1) {
 				x11->have_dri3 = true;
 				x11->dri3_major_version = dri3_reply->major_version;
-				x11->dri3_minor_version = dri3_reply->minor_version;
+				x11->dri3_minor_version = 2; //dri3_reply->minor_version;	Xorg erroneously reports version 1.0 for Nvidia drivers.
 			} else {
 				wlr_log(WLR_INFO, "X11 does not support required DRI3 version "
 					"(has %"PRIu32".%"PRIu32", want 1.0)",
