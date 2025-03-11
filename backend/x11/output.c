@@ -656,10 +656,12 @@ struct wlr_output *wlr_x11_output_create(struct wlr_backend *backend) {
 		x11->atoms.wm_protocols, XCB_ATOM_ATOM, 32, 1,
 		&x11->atoms.wm_delete_window);
 
-	uint32_t enabled = 1;
-	xcb_change_property(x11->xcb, XCB_PROP_MODE_REPLACE, output->win,
-		x11->atoms.variable_refresh, XCB_ATOM_CARDINAL, 32, 1,
-		&enabled);
+	if (x11->atoms.variable_refresh != XCB_ATOM_NONE) {
+		uint32_t enabled = 1;
+		xcb_change_property(x11->xcb, XCB_PROP_MODE_REPLACE, output->win,
+			x11->atoms.variable_refresh, XCB_ATOM_CARDINAL, 32, 1,
+			&enabled);
+	}
 	wlr_output->adaptive_sync_status = WLR_OUTPUT_ADAPTIVE_SYNC_ENABLED;
 
 	wlr_x11_output_set_title(wlr_output, NULL);
